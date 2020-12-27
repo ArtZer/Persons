@@ -187,5 +187,21 @@ namespace Persons
 
             chart1.Series[0].Points.DataBindY(sqlR.amountPerson("Persons"));
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            try
+            {
+                var xml = new UnLoadingXML();
+                xml.UnLoading(dataSet);
+                MessageBox.Show("Выгрузка файла (Table) завершена");
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show("Исключение: " + ex);
+            }
+
+        }
     }
 }
