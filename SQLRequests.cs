@@ -94,7 +94,7 @@ namespace Persons
             adapter.Fill(dataSet);
         }
 
-        public List<int> amountPerson(string table)
+        public List<int> AmountPerson(string table)
         {
             string source = "Data Source=\"PersonsDB.sdf\"; password=\"qwerty\"";
             con = new SqlCeConnection(source);
@@ -115,7 +115,24 @@ namespace Persons
 
             reader.Close();
             return numbers;
-        } 
+        }
+
+        public DataSet AmountPerson(string data1, string data2)
+        {
+            con = new SqlCeConnection(source);
+            dataSet = new DataSet();
+
+            var f = @"Select * From Persons where ДатаПриема >= @Data1 and (ДатаУвольнения is null or ДатаУвольнения > @Data2)";
+            cmd = new SqlCeCommand(f, con);
+            cmd.Parameters.AddWithValue("@Data1", SqlDbType.DateTime).Value = data1;
+            cmd.Parameters.AddWithValue("@Data2", SqlDbType.DateTime).Value = data2;
+
+            adapter = new SqlCeDataAdapter(cmd);
+
+            adapter.Fill(dataSet);
+
+            return dataSet;
+        }
 
     }
 }

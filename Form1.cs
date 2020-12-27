@@ -69,7 +69,6 @@ namespace Persons
                 MessageBox.Show($"Возникло исключение {ex.Message}");
             }
 
-
             com.Dispose();
             con.Close();
         }
@@ -185,12 +184,30 @@ namespace Persons
 
             chart1.ChartAreas[0].BackColor = Color.Wheat;
 
-            chart1.Series[0].Points.DataBindY(sqlR.amountPerson("Persons"));
+            //chart1.Series[0].Points.DataBindY(sqlR.amountPerson("Persons"));
+
+            //int[] gold = {10000};
+            //chart1.Series[0].Points.DataBindY(sqlR.amountPerson("Persons"));
+            chart1.Series.Add("Кол сотрудников");
+            chart1.Series.Add("Сред зп");
+
+            //chart1.Series[0].Points.DataBindY(gold);
+
+            int[] gold1 = { 4, 8};
+            int[] gold3= { 1, 2 };
+
+            int[] gold2 = { 8, 5 };
+            int[] gold4 = { 1,2 };
+            for(int i =0; i<2; i++)
+            {
+                chart1.Series["Кол сотрудников"].Points.AddXY(gold3[i], gold1[i]);
+                chart1.Series["Сред зп"].Points.AddXY(gold4[i], gold2[i]);
+            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
             try
             {
                 var xml = new UnLoadingXML();
@@ -201,7 +218,13 @@ namespace Persons
             {
                MessageBox.Show("Исключение: " + ex);
             }
+        }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var stat = new Statistic();
+
+            mainGridView.DataSource = stat.Show().Tables[0];
         }
     }
 }
