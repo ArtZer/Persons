@@ -179,31 +179,22 @@ namespace Persons
 
         private void button1_Click(object sender, EventArgs e)
         {
-            chart1.Titles.Add("Кол сотрудников");
-            chart1.Titles[0].Font = new Font("Utopia", 16);
-
+            chart1.Series.Clear();
+            var stat = new Statistic();
             chart1.ChartAreas[0].BackColor = Color.Wheat;
 
-            //chart1.Series[0].Points.DataBindY(sqlR.amountPerson("Persons"));
+            var countPersons = new List<int>();
+            var money = new List<int>();
 
-            //int[] gold = {10000};
-            //chart1.Series[0].Points.DataBindY(sqlR.amountPerson("Persons"));
+            countPersons = stat.ShowMonth(out money);
+
             chart1.Series.Add("Кол сотрудников");
-            chart1.Series.Add("Сред зп");
-
-            //chart1.Series[0].Points.DataBindY(gold);
-
-            int[] gold1 = { 4, 8};
-            int[] gold3= { 1, 2 };
-
-            int[] gold2 = { 8, 5 };
-            int[] gold4 = { 1,2 };
-            for(int i =0; i<2; i++)
+            chart1.Series.Add("Сред зп 10тыс.р.");
+            for (int i = 0; i < 12; i++)
             {
-                chart1.Series["Кол сотрудников"].Points.AddXY(gold3[i], gold1[i]);
-                chart1.Series["Сред зп"].Points.AddXY(gold4[i], gold2[i]);
+                chart1.Series["Сред зп 10тыс.р."].Points.AddXY(i + 1, money[i]);
+                chart1.Series["Кол сотрудников"].Points.AddXY(i + 1, countPersons[i]);
             }
-            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -214,27 +205,15 @@ namespace Persons
                 xml.UnLoading(dataSet);
                 MessageBox.Show("Выгрузка файла (Table) завершена");
             }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show("Таблица пуста!");
+            }
             catch (Exception ex)
             {
                MessageBox.Show("Исключение: " + ex);
             }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var stat = new Statistic();
-            var countPersons = new List<int>();
-            var money = new List<int>();
-
-            countPersons = stat.ShowMonth(out money);
             
-            chart1.Series.Add("Кол сотрудников");
-            chart1.Series.Add("Сред зп 10тыс.р.");
-            for(int i=0; i < 12; i++)
-            {
-                chart1.Series["Сред зп 10тыс.р."].Points.AddXY(i+1, money[i]);
-                chart1.Series["Кол сотрудников"].Points.AddXY(i+1, countPersons[i]);                
-            }
         }
     }
 }
