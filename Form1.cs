@@ -223,8 +223,18 @@ namespace Persons
         private void button3_Click(object sender, EventArgs e)
         {
             var stat = new Statistic();
+            var countPersons = new List<int>();
+            var money = new List<int>();
 
-            mainGridView.DataSource = stat.Show().Tables[0];
+            countPersons = stat.ShowMonth(out money);
+            
+            chart1.Series.Add("Кол сотрудников");
+            chart1.Series.Add("Сред зп 10тыс.р.");
+            for(int i=0; i < 12; i++)
+            {
+                chart1.Series["Сред зп 10тыс.р."].Points.AddXY(i+1, money[i]);
+                chart1.Series["Кол сотрудников"].Points.AddXY(i+1, countPersons[i]);                
+            }
         }
     }
 }

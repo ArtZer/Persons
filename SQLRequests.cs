@@ -122,7 +122,7 @@ namespace Persons
             con = new SqlCeConnection(source);
             dataSet = new DataSet();
 
-            var f = @"Select * From Persons where ДатаПриема >= @Data1 and (ДатаУвольнения is null or ДатаУвольнения > @Data2)";
+            var f = @"Select * From Persons where (ДатаПриема <= @Data2 and (ДатаУвольнения is null or ДатаУвольнения > @Data1))";
             cmd = new SqlCeCommand(f, con);
             cmd.Parameters.AddWithValue("@Data1", SqlDbType.DateTime).Value = data1;
             cmd.Parameters.AddWithValue("@Data2", SqlDbType.DateTime).Value = data2;
